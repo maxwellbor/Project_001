@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
@@ -6,7 +6,9 @@
 [ext_resource path="res://BackGround/Background_01.png" type="Texture" id=4]
 [ext_resource path="res://Coin.gd" type="Script" id=5]
 [ext_resource path="res://objects/Coin.png" type="Texture" id=6]
+[ext_resource path="res://NPCs/Enemy_05.png" type="Texture" id=7]
 [ext_resource path="res://World.gd" type="Script" id=8]
+[ext_resource path="res://Enemy1.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -144,6 +146,25 @@ tracks/0/keys = {
 "values": [ 0, 3 ]
 }
 
+[sub_resource type="Animation" id=11]
+resource_name = "walk"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 5, 5 )
+
 [node name="World" type="Node2D"]
 script = ExtResource( 8 )
 __meta__ = {
@@ -242,5 +263,46 @@ anims/spin = SubResource( 10 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="--Coins--/Coin2"]
 shape = SubResource( 8 )
+
+[node name="--Enemys--" type="Node" parent="."]
+
+[node name="Enemy1" type="KinematicBody2D" parent="--Enemys--"]
+position = Vector2( 328, 19 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="--Enemys--/Enemy1"]
+texture = ExtResource( 7 )
+hframes = 3
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="--Enemys--/Enemy1"]
+anims/walk = SubResource( 11 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="--Enemys--/Enemy1"]
+position = Vector2( 0, 3 )
+shape = SubResource( 12 )
+
+[node name="floorLeft" type="RayCast2D" parent="--Enemys--/Enemy1"]
+position = Vector2( -6, 8 )
+enabled = true
+cast_to = Vector2( 0, 1 )
+
+[node name="floorRight" type="RayCast2D" parent="--Enemys--/Enemy1"]
+position = Vector2( 6, 8 )
+enabled = true
+cast_to = Vector2( 0, 1 )
+
+[node name="wallLeft" type="RayCast2D" parent="--Enemys--/Enemy1"]
+position = Vector2( -5, 2 )
+enabled = true
+cast_to = Vector2( -1, 0 )
+
+[node name="wallRight" type="RayCast2D" parent="--Enemys--/Enemy1"]
+position = Vector2( 5, 2 )
+enabled = true
+cast_to = Vector2( 1, 0 )
 [connection signal="body_entered" from="--Coins--/Coin" to="--Coins--/Coin" method="_on_Coin_body_entered"]
 [connection signal="body_entered" from="--Coins--/Coin2" to="--Coins--/Coin2" method="_on_Coin_body_entered"]

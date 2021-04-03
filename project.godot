@@ -28,10 +28,3 @@ Hud="*res://Hud/Hud.tscn"
 
 window/size/width=320
 window/size/height=256
-
-[layer_names]
-
-2d_physics/layer_1="Player-Tile"
-2d_physics/layer_2="playerSensors"
-2d_physics/layer_3="Enemy"
-2d_physics/layer_4="enemySensors"
