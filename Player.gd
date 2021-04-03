@@ -5,7 +5,7 @@ var motion = Vector2()
 const floorDirection = Vector2(0,-1)
 
 # Velocidade Maxima
-const speedMax = 200
+const speedMax = 100
 # Gravidade
 const gravity = 20
 # Aceleração maxima da Gravidade
@@ -76,6 +76,6 @@ func _physics_process(delta):
 	# Pulo interrompido
 	if Input.is_action_just_released("ui_up") and motion.y < 0:
 		motion.y = 0
-	
 	# Executar Movimentação
 	move_and_slide(motion, floorDirection)
+

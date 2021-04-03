@@ -4,10 +4,11 @@ func _ready():
 
 # Ao tocar Moeda
 func _on_Coin_body_entered(body):
+	# Somar Moeda
+	Global.coins += 1
 	# Animação de Coleta
 	$AnimationPlayer.play("collected")
 	# Esperar Animação Terminar
 	yield($AnimationPlayer, "animation_finished")
 	# Destruir Objeto
 	queue_free()
-	pass # Replace with function body.
