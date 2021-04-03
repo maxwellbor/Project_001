@@ -4,10 +4,11 @@ var floorDir = Vector2(0,-1)
 const speed = 80
 const gravity = 20
 const gravityMax = 200
+var hited = 0
 
 func _physics_process(delta):
 	# Chão
-	if is_on_floor():
+	if is_on_floor() and hited == 0:
 		# Movimento Inicial
 		if motion.x == 0:
 			motion.x = speed
@@ -45,3 +46,18 @@ func _physics_process(delta):
 			motion.y += gravity
 	
 	move_and_slide(motion, floorDir)
+
+
+func _on_Head_body_entered(body):
+	# Parar movimentos
+	hited = 1
+	motion.x = 0
+	# Repelir Player
+	$"../../Player".motion.y = - ($"../../Player".powerJump)/2
+	
+	# Animação
+	$AnimationPlayer.play("hited")
+	# Esperar Animação
+	yield($AnimationPlayer, "animation_finished")
+	# Destruir Enemy
+	queue_free()

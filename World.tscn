@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
@@ -147,7 +147,22 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=11]
-resource_name = "walk"
+resource_name = "hited"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+
+[sub_resource type="Animation" id=12]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -162,8 +177,11 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 5, 5 )
+
+[sub_resource type="RectangleShape2D" id=14]
+extents = Vector2( 5, 1 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 8 )
@@ -173,7 +191,7 @@ __meta__ = {
 
 [node name="Player" type="KinematicBody2D" parent="."]
 position = Vector2( 172, 194 )
-collision_layer = 7
+collision_layer = 15
 collision_mask = 2147483649
 script = ExtResource( 1 )
 
@@ -267,11 +285,8 @@ shape = SubResource( 8 )
 [node name="--Enemys--" type="Node" parent="."]
 
 [node name="Enemy1" type="KinematicBody2D" parent="--Enemys--"]
-position = Vector2( 328, 19 )
+position = Vector2( 96, 220 )
 script = ExtResource( 9 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Sprite" type="Sprite" parent="--Enemys--/Enemy1"]
 texture = ExtResource( 7 )
@@ -279,11 +294,12 @@ hframes = 3
 frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="--Enemys--/Enemy1"]
-anims/walk = SubResource( 11 )
+anims/hited = SubResource( 11 )
+anims/walk = SubResource( 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="--Enemys--/Enemy1"]
 position = Vector2( 0, 3 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="floorLeft" type="RayCast2D" parent="--Enemys--/Enemy1"]
 position = Vector2( -6, 8 )
@@ -304,5 +320,15 @@ cast_to = Vector2( -1, 0 )
 position = Vector2( 5, 2 )
 enabled = true
 cast_to = Vector2( 1, 0 )
+
+[node name="Head" type="Area2D" parent="--Enemys--/Enemy1"]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="--Enemys--/Enemy1/Head"]
+modulate = Color( 0, 1, 0.0156863, 1 )
+position = Vector2( 0, -3 )
+shape = SubResource( 14 )
 [connection signal="body_entered" from="--Coins--/Coin" to="--Coins--/Coin" method="_on_Coin_body_entered"]
 [connection signal="body_entered" from="--Coins--/Coin2" to="--Coins--/Coin2" method="_on_Coin_body_entered"]
+[connection signal="body_entered" from="--Enemys--/Enemy1/Head" to="--Enemys--/Enemy1" method="_on_Head_body_entered"]
