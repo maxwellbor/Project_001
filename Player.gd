@@ -5,13 +5,13 @@ var motion = Vector2()
 const floorDirection = Vector2(0,-1)
 
 # Velocidade Maxima
-const speedMax = 300
+const speedMax = 200
 # Gravidade
-const gravity = 100
+const gravity = 20
 # Aceleração maxima da Gravidade
 const maxGravity = 200
 # Força do Pulo
-const powerJump = 200
+const powerJump = 400
 
 # Configurar Fisica
 func _physics_process(delta):
@@ -26,13 +26,58 @@ func _physics_process(delta):
 		motion.y = - powerJump
 	# Mover para Direita
 	elif Input.is_action_pressed("ui_right"):
+		# Animação
+		# No chão
+		if is_on_floor():
+			$AnimationPlayer.play("walk")
+		# No Ar
+		else:
+			# Pulando
+			if motion.y < 0:
+				$AnimationPlayer.play("jump")
+			# Caindo
+			elif motion.y > 0:
+				$AnimationPlayer.play("fall")
+		# Virar Sprite
+		$Sprite.set_flip_h(false)
 		motion.x = speedMax
 	# Mover para Esquerda
 	elif Input.is_action_pressed("ui_left"):
+		# Animação
+		# No chão
+		if is_on_floor():
+			$AnimationPlayer.play("walk")
+		# No ar
+		else:
+			# Pulando
+			if motion.y < 0:
+				$AnimationPlayer.play("jump")
+			# Caindo
+			elif motion.y > 0:
+				$AnimationPlayer.play("fall")
+		# Virar Sprite
+		$Sprite.set_flip_h(true)
 		motion.x = - speedMax
 	# Para movimento Horizontal
 	else:
+		# Animação
+		# No chão
+		if is_on_floor():
+			$AnimationPlayer.play("idle")
+		# No ar
+		else:
+			# Pulando
+			if motion.y < 0:
+				$AnimationPlayer.play("jump")
+			# Caindo
+			elif motion.y > 0:
+				$AnimationPlayer.play("fall")
 		motion.x = 0
+	# Pulo interrompido
+	if Input.is_action_just_released("ui_up") and motion.y < 0:
+		motion.y = 0
+
 	
 	# Executar Movimentação
 	move_and_slide(motion, floorDirection)
+
