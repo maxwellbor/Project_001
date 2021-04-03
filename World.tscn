@@ -193,7 +193,7 @@ __meta__ = {
 }
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 172, 194 )
+position = Vector2( 14, 224 )
 collision_layer = 15
 collision_mask = 2147483649
 script = ExtResource( 1 )
@@ -244,7 +244,7 @@ centered = false
 [node name="--Coins--" type="Node" parent="."]
 
 [node name="Coin" type="Area2D" parent="--Coins--"]
-position = Vector2( 198, 207 )
+position = Vector2( 112, 216 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 5 )
@@ -265,7 +265,7 @@ anims/spin = SubResource( 7 )
 shape = SubResource( 8 )
 
 [node name="Coin2" type="Area2D" parent="--Coins--"]
-position = Vector2( 216, 207 )
+position = Vector2( 136, 216 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true
@@ -286,8 +286,11 @@ shape = SubResource( 8 )
 [node name="--Enemys--" type="Node" parent="."]
 
 [node name="Enemy1" type="KinematicBody2D" parent="--Enemys--"]
-position = Vector2( 96, 220 )
+position = Vector2( 184, 216 )
 script = ExtResource( 9 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="--Enemys--/Enemy1"]
 texture = ExtResource( 7 )

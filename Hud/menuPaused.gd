@@ -34,3 +34,5 @@ func _on_reset_pressed():
 	Global.coins = 0
 	# Reiniciar Scene
 	get_tree().change_scene("res://World.tscn")
+	# Resetar Transition
+	$"../Transition".margin_left = 0
