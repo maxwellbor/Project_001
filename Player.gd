@@ -4,23 +4,32 @@ var motion = Vector2()
 # Definir direção do Piso / Chão
 const floorDirection = Vector2(0,-1)
 
+# Velocidade Maxima
+const speedMax = 300
+# Gravidade
+const gravity = 100
+# Aceleração maxima da Gravidade
+const maxGravity = 200
+# Força do Pulo
+const powerJump = 200
+
 # Configurar Fisica
 func _physics_process(delta):
 	# Configurar Gravidade
 	# Limitar a Aceleração da Gravidade
-	if motion.y < 200:
-		motion.y += 20
+	if motion.y < maxGravity:
+		motion.y += gravity
 	
 	# Pular
 	# Pular apenas em contato com o Chão
 	if Input.is_action_pressed("ui_up") and is_on_floor():
-		motion.y = -500
+		motion.y = - powerJump
 	# Mover para Direita
 	elif Input.is_action_pressed("ui_right"):
-		motion.x = 100
+		motion.x = speedMax
 	# Mover para Esquerda
 	elif Input.is_action_pressed("ui_left"):
-		motion.x = -100
+		motion.x = - speedMax
 	# Para movimento Horizontal
 	else:
 		motion.x = 0
