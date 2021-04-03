@@ -4,3 +4,4 @@ func _process(delta):
 	$lifes.text = String(Global.lifes)
 	# Atualizar Moedas
 	$coins.text = String(Global.coins)
+	

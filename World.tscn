@@ -184,7 +184,7 @@ extents = Vector2( 5, 5 )
 extents = Vector2( 5, 1 )
 
 [sub_resource type="RectangleShape2D" id=15]
-extents = Vector2( 7, 4 )
+extents = Vector2( 6, 4 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 8 )
@@ -328,6 +328,7 @@ collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="--Enemys--/Enemy1/Head"]
 modulate = Color( 0, 1, 0.0156863, 1 )
+light_mask = 8
 position = Vector2( 0, -3 )
 shape = SubResource( 14 )
 
@@ -336,7 +337,7 @@ collision_layer = 8
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="--Enemys--/Enemy1/Body"]
-modulate = Color( 0.0784314, 0, 1, 1 )
+modulate = Color( 0, 0.0156863, 1, 1 )
 position = Vector2( 0, 3 )
 shape = SubResource( 15 )
 [connection signal="body_entered" from="--Coins--/Coin" to="--Coins--/Coin" method="_on_Coin_body_entered"]
