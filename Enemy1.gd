@@ -61,3 +61,21 @@ func _on_Head_body_entered(body):
 	yield($AnimationPlayer, "animation_finished")
 	# Destruir Enemy
 	queue_free()
+
+
+func _on_Body_body_entered(body):
+	# Parar Enemy1
+	hited = 1
+	# Repelir Enemy1
+	motion.x = - motion.x
+	motion.y = - speed*2
+	# Repelir Player
+	$"../../Player".motion.y = - $"../../Player".powerJump/2
+	# Animação
+	$AnimationPlayer.play("hited")
+	# Esperar
+	yield($AnimationPlayer, "animation_finished")
+	# Subtrair Vida
+	Global.lifes -= 1
+	# Mover Enemy1
+	hited = 0
