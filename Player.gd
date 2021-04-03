@@ -76,8 +76,6 @@ func _physics_process(delta):
 	# Pulo interrompido
 	if Input.is_action_just_released("ui_up") and motion.y < 0:
 		motion.y = 0
-
 	
 	# Executar Movimentação
 	move_and_slide(motion, floorDirection)
-

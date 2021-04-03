@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
 [ext_resource path="res://tileBlocks.tres" type="TileSet" id=3]
 [ext_resource path="res://BackGround/Background_01.png" type="Texture" id=4]
+[ext_resource path="res://Coin.gd" type="Script" id=5]
+[ext_resource path="res://objects/Coin.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -72,14 +74,80 @@ tracks/0/keys = {
 "values": [ 0, 3 ]
 }
 
+[sub_resource type="Animation" id=6]
+resource_name = "collected"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 4, 7 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "spin"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 3 ]
+}
+
+[sub_resource type="CircleShape2D" id=8]
+radius = 8.0
+
+[sub_resource type="Animation" id=9]
+resource_name = "collected"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 4, 7 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "spin"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 3 ]
+}
+
 [node name="World" type="Node2D"]
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 152, 56 )
+position = Vector2( 176, 144 )
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Sprite" type="Sprite" parent="Player"]
 texture = ExtResource( 2 )
@@ -114,8 +182,53 @@ tile_data = PoolIntArray( 65535, 0, 0, 131071, 0, 0, 196607, 0, 0, 262143, 0, 0,
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2( 0.1, 0 )
 motion_mirroring = Vector2( 320, 0.1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 4 )
 centered = false
+
+[node name="--Coins--" type="Node" parent="."]
+
+[node name="Coin" type="Area2D" parent="--Coins--"]
+position = Vector2( 232, 200 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="--Coins--/Coin"]
+texture = ExtResource( 6 )
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="--Coins--/Coin"]
+autoplay = "spin"
+anims/collected = SubResource( 6 )
+anims/spin = SubResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="--Coins--/Coin"]
+shape = SubResource( 8 )
+
+[node name="Coin2" type="Area2D" parent="--Coins--"]
+position = Vector2( 280, 176 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="--Coins--/Coin2"]
+texture = ExtResource( 6 )
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="--Coins--/Coin2"]
+autoplay = "spin"
+anims/collected = SubResource( 9 )
+anims/spin = SubResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="--Coins--/Coin2"]
+shape = SubResource( 8 )
+[connection signal="body_entered" from="--Coins--/Coin" to="--Coins--/Coin" method="_on_Coin_body_entered"]
+[connection signal="body_entered" from="--Coins--/Coin2" to="--Coins--/Coin2" method="_on_Coin_body_entered"]
